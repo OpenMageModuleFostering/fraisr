@@ -1,0 +1,233 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @category   Fraisr
+ * @package    Fraisr_Connect
+ * @copyright  Copyright (c) 2013 das MedienKombinat Gmbh <kontakt@das-medienkombinat.de>
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @author     André Herrn <andre.herrn@das-medienkombinat.de>
+ */
+-->
+<config>
+    <modules>
+        <Fraisr_Connect>
+            <version>0.3.5</version>
+        </Fraisr_Connect>
+    </modules>
+    <global>
+        <blocks>
+            <fraisrconnect>
+                <class>Fraisr_Connect_Block</class>
+            </fraisrconnect>
+        </blocks>
+        <models>
+           <fraisrconnect>
+               <class>Fraisr_Connect_Model</class>
+               <resourceModel>fraisrconnect_mysql4</resourceModel>
+            </fraisrconnect>
+            <fraisrconnect_mysql4>
+                <class>Fraisr_Connect_Model_Mysql4</class>
+                <entities>
+                    <cause>
+                        <table>fraisrconnect_cause</table>
+                    </cause>
+                    <category>
+                        <table>fraisrconnect_category</table>
+                    </category>
+                    <log>
+                        <table>fraisrconnect_log</table>
+                    </log>
+                </entities>
+            </fraisrconnect_mysql4>
+        </models>
+        <helpers>
+            <fraisrconnect>
+                <class>Fraisr_Connect_Helper</class>
+            </fraisrconnect>
+        </helpers>
+        <resources>
+            <fraisrconnect_setup>
+                <setup>
+                    <module>Fraisr_Connect</module>
+                    <class>Fraisr_Connect_Model_Resource_Setup</class>
+                </setup>
+            </fraisrconnect_setup>
+        </resources>
+        <events>
+            <catalog_product_delete_before>
+                <observers>
+                    <fraisr_add_product_to_queue>
+                        <class>fraisrconnect/observer</class>
+                        <method>addProductToQueue</method>
+                    </fraisr_add_product_to_queue>
+                </observers>
+            </catalog_product_delete_before>
+            <sales_quote_add_item>
+                <observers>
+                    <fraisr_add_fraisrid_to_quote_item>
+                        <class>fraisrconnect/observer</class>
+                        <method>addFraisrIdToQuoteItem</method>
+                        <type>singleton</type>
+                    </fraisr_add_fraisrid_to_quote_item>
+                </observers>
+            </sales_quote_add_item>
+            <sales_convert_quote_item_to_order_item>
+                <observers>
+                    <fraisr_add_fraisrid_to_order_item>
+                        <class>fraisrconnect/observer</class>
+                        <method>addFraisrIdToOrderItem</method>
+                        <type>singleton</type>
+                    </fraisr_add_fraisrid_to_order_item>
+                </observers>
+            </sales_convert_quote_item_to_order_item>
+        </events>
+    </global>
+    <frontend>
+        <routers>
+            <fraisrconnect>
+                <use>standard</use>
+                <args>
+                    <module>Fraisr_Connect</module>
+                    <frontName>fraisr</frontName>
+                </args>
+            </fraisrconnect>
+        </routers>
+        <translate>
+            <modules>
+                <Fraisr_Connect>
+                    <files>
+                        <default>Fraisr_Connect.csv</default>
+                    </files>
+                </Fraisr_Connect>
+            </modules>
+        </translate>
+        <layout>
+            <updates>
+                <fraisrconnect>
+                    <file>fraisrconnect.xml</file>
+                </fraisrconnect>
+            </updates>
+        </layout>
+    </frontend>
+    <admin>
+        <routers>
+            <fraisrconnect>
+                <use>admin</use>
+                <args>
+                    <module>Fraisr_Connect</module>
+                    <frontName>fraisrconnect</frontName>
+                </args>
+            </fraisrconnect>
+        </routers>
+    </admin>
+    <adminhtml>
+        <translate>
+            <modules>
+                <Fraisr_Connect>
+                    <files>
+                        <default>Fraisr_Connect.csv</default>
+                    </files>
+                </Fraisr_Connect>
+            </modules>
+        </translate>
+    </adminhtml>
+    <crontab>
+        <jobs>
+            <!-- Cause synchronisation -->
+            <fraisrconnect_synchronisation_cause>
+                <schedule>
+                    <cron_expr>30 1 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>fraisrconnect/observer::synchronizeCauses</model>
+                </run>
+            </fraisrconnect_synchronisation_cause>
+            <!-- Category synchronisation -->
+            <fraisrconnect_synchronisation_category>
+                <schedule>
+                    <cron_expr>0 2 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>fraisrconnect/observer::synchronizeCategories</model>
+                </run>
+            </fraisrconnect_synchronisation_category>
+            <!-- Mark products for synchronisation -->
+            <fraisrconnect_synchronisation_mark_products>
+                <schedule>
+                    <cron_expr>30 2 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>fraisrconnect/observer::markProductsAsToSynchronize</model>
+                </run>
+            </fraisrconnect_synchronisation_mark_products>
+            <!-- Products synchronisation -->
+            <fraisrconnect_synchronisation_products>
+                <schedule>
+                    <cron_expr>0 3 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>fraisrconnect/observer::synchronizeProducts</model>
+                </run>
+            </fraisrconnect_synchronisation_products>
+            <!-- Orders synchronisation -->
+            <fraisrconnect_synchronisation_orders>
+                <schedule>
+                    <cron_expr>0 4 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>fraisrconnect/observer::synchronizeOrders</model>
+                </run>
+            </fraisrconnect_synchronisation_orders>
+        </jobs>
+    </crontab>
+    <default>
+        <fraisrconnect>
+            <general>
+                <active>0</active>
+                <sandbox>1</sandbox>
+            </general>
+            <catalog_export>
+                <scope>#global#</scope>
+                <description_attribute>description</description_attribute>
+            </catalog_export>
+            <order_export>
+                <order_status>processing,complete</order_status>
+                <synchronisation_days>7</synchronisation_days>
+                <invoice_items>0</invoice_items>
+            </order_export>
+            <frontend>
+                <donation_label>icon</donation_label>
+                <icon_position>topleft</icon_position>
+                <banderole_position>top</banderole_position>
+            </frontend>
+            <frontend_detailpage>
+                <area_top>1</area_top>
+                <area_bottom>0</area_bottom>
+            </frontend_detailpage>
+            <static>
+                <support_email>support@fraisr.zendesk.com</support_email>
+                <commercial_register_url>https://www.fraisr.com/register-business</commercial_register_url>
+                <api>
+                    <live>https://www.fraisr.com/</live>
+                    <sandbox>https://fraisr-test.herokuapp.com/</sandbox>
+                    <cause>api/v1/causes/for-shops</cause>
+                    <category>api/v1/categories</category>
+                    <product>api/v1/products/%s</product>
+                    <order>/api/v1/orders/%s</order>
+                    <donation_label_iframe>de/trusted-shop/%s</donation_label_iframe>
+                    <frontend_js>widgets/javascripts/magento/fraisr.js</frontend_js>
+                    <frontend_css>widgets/stylesheets/magento/fraisr.css</frontend_css>
+                    <plugin_identification_value>magento</plugin_identification_value>
+                </api>
+            </static>
+        </fraisrconnect>
+    </default>
+</config>

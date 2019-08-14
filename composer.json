@@ -1,0 +1,16 @@
+{
+    "name": "OpenMageModuleFostering/Fraisr",
+    "type": "magento-module",
+    "license": "OSL-3.0",
+    "homepage": "",
+    "description": "Extension zur Anbindung von Magento an den fraisr-Marktplatz",
+    "authors": [
+    {
+        "name": "Andre Herrn",
+        "email": "andre.herrn@das-medienkombinat.de"
+    }
+],
+    "suggest": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}

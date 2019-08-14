@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @category   Fraisr
+ * @package    Fraisr_Connect
+ * @copyright  Copyright (c) 2013 das MedienKombinat Gmbh <kontakt@das-medienkombinat.de>
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @author     André Herrn <andre.herrn@das-medienkombinat.de>
+ */
+-->
+<config>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <fraisrconnect translate="title" module="fraisrconnect">
+                                        <title>fraisr</title>
+                                        <sort_order>1000</sort_order>
+                                    </fraisrconnect>
+                                </children>
+                            </config>
+                             <fraisr_log>
+                                <title>fraisr log</title>
+                                <sort_order>150</sort_order>
+                            </fraisr_log>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+    <menu>
+        <system>
+            <children>
+                <fraisr_log translate="title">
+                    <sort_order>100</sort_order>
+                    <title>fraisr log</title>
+                    <action>fraisrconnect/adminhtml_log/index</action>
+                </fraisr_log>
+            </children>
+        </system>
+    </menu> 
+</config>

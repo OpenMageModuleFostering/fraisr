@@ -1,0 +1,230 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @category   Fraisr
+ * @package    Fraisr_Connect
+ * @copyright  Copyright (c) 2013 das MedienKombinat Gmbh <kontakt@das-medienkombinat.de>
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @author     André Herrn <andre.herrn@das-medienkombinat.de>
+ */
+-->
+<config>
+    <sections>
+        <fraisrconnect translate="label" module="fraisrconnect">
+            <label>fraisr</label>
+            <tab>service</tab>
+            <sort_order>500</sort_order>
+            <frontend_type>text</frontend_type>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <support translate="label">
+                    <label>Support</label>
+                    <frontend_type>text</frontend_type>
+                    <frontend_model>fraisrconnect/adminhtml_system_config_support</frontend_model>
+                    <sort_order>0</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                </support>
+                <general translate="label comment" module="fraisrconnect">
+                    <label>Basic configuration</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>100</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label comment" module="adminhtml">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                        <sandbox translate="label comment">
+                            <label>Sandbox</label>
+                            <comment>If activated all actions will be done against the Sandbox-API.</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>150</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </sandbox>
+                        <key translate="label comment">
+                            <label>Key</label>
+                            <comment><![CDATA[Your key is visible in the fraisr-Backend.]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry</validate>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </key>
+                        <secret translate="label comment">
+                            <label>Secret</label>
+                            <comment><![CDATA[Your secret is visible in the fraisr-Backend.]]></comment>
+                            <frontend_type>password</frontend_type>
+                            <validate>required-entry</validate>
+                            <sort_order>300</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </secret>
+                    </fields>
+                </general>
+                <catalog_export>
+                    <label>Product synchronisation</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>200</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <scope translate="label comment">
+                            <label>Scope</label>
+                            <comment><![CDATA[Please select "Global" or a store as catalog export base.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>fraisrconnect/system_config_source_scope</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </scope>
+                        <description_attribute>
+                            <label>Attribute for product description</label>
+                            <comment><![CDATA[This attribute will be taken as product description for the export to fraisr.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>fraisrconnect/system_config_source_productAttribute</source_model>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </description_attribute>
+                    </fields>
+                </catalog_export>
+                <order_export>
+                    <label>Order synchronisation</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>250</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <order_status translate="label comment">
+                            <label>Order status (new orders)</label>
+                            <comment><![CDATA[Only orders with this status will be added in fraisr.]]></comment>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>Mage_Adminhtml_Model_System_Config_Source_Order_Status</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </order_status>
+                        <synchronisation_days>
+                            <label>Recent days to synchronize</label>
+                            <comment><![CDATA[All orders which were created and/or updated during the last defined days will be synchronized.]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-number</validate>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </synchronisation_days>
+                        <invoice_items translate="label comment">
+                            <label>Invoice items</label>
+                            <comment>If activated invoice item amount will be taken as reference instead of order item amount.</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>300</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </invoice_items>
+                    </fields>
+                </order_export>
+                <frontend translate="label" module="fraisrconnect">
+                    <label>Donation label product list</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>300</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <donation_label translate="label comment">
+                            <label>Donation label</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>fraisrconnect/system_config_source_donationLabel</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </donation_label>
+                        <icon_position translate="label comment">
+                            <label>Icon position</label>
+                            <comment><![CDATA[This setup is used if "Donation label" is set to "Icon".]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>fraisrconnect/system_config_source_iconPosition</source_model>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </icon_position>
+                        <banderole_position translate="label comment">
+                            <label>Banderole position</label>
+                            <comment><![CDATA[This setup is used if "Donation label" is set to "Banderole".]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>fraisrconnect/system_config_source_banderolePosition</source_model>
+                            <sort_order>300</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </banderole_position>
+                    </fields>
+                </frontend>
+                <frontend_detailpage translate="label" module="fraisrconnect">
+                    <label>Donation label product view</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>400</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <area_top translate="label comment">
+                            <label>Top area</label>
+                            <comment><![CDATA[Show the donation label in the top area. The donation label will be included under the short description if the structure of the product detail page wasn't modified.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </area_top>
+                        <area_bottom translate="label comment">
+                            <label>Bottom area</label>
+                            <comment><![CDATA[Show the donation label in the bottom area. The donation label will be included above the additional informations if the structure of the product detail page wasn't modified.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </area_bottom>
+                    </fields>
+                </frontend_detailpage>
+            </groups>
+        </fraisrconnect>
+    </sections>
+</config>
